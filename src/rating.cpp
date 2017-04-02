@@ -31,4 +31,5 @@ istream& operator>>(istream& in, Rating& rating)
     position = temp.find(',');
     rating.m_rating = stoi(temp.substr(0, position)); 
     rating.m_bookId = temp.substr(position + 2, temp.length());
+    return in;
 }
