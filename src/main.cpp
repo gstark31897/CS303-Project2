@@ -1,17 +1,14 @@
-#include "customer.h"
+#include "rating.h"
 #include <iostream>
 
 using namespace std;
 
 int main()
 {
-    Customer customer;
+    Rating rating; 
     cout << "Enter info" << endl;
     
-    cin >> customer;
-    
-    cout << customer.getID() << endl;
-    cout << customer.getName() << endl;
+    cin >> rating;
     
     return 0;
     
