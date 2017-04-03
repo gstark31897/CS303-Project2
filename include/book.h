@@ -1,3 +1,6 @@
+#ifndef H_BOOK
+#define H_BOOK
+
 #include <iostream> 
 #include <string>
 
@@ -21,3 +24,4 @@ class Book
     friend std::istream& operator>>(std::istream& in, Book& book);
 };
     
+#endif

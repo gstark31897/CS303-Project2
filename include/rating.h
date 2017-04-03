@@ -1,3 +1,6 @@
+#ifndef H_RATING
+#define H_RATING
+
 #include <iostream>
 
 class Rating
@@ -21,3 +24,5 @@ class Rating
     
     friend std::istream& operator>>(std::istream& in, Rating& rating);
 };
+
+#endif

@@ -1,3 +1,6 @@
+#ifndef H_CUSTOMER
+#define H_CUSTOMER
+
 #include <iostream>
 #include <string>
 
@@ -19,3 +22,5 @@ class Customer
 
     friend std::istream& operator>>(std::istream& in, Customer& customer);
 };
+
+#endif
