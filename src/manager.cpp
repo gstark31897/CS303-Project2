@@ -14,13 +14,16 @@ Manager::Manager()
     getline(booksFile, temp);
     while(!booksFile.eof())
     {
+        Book *tempBook;
         try
-        {
-            Book tempBook;
-            booksFile >> tempBook;
+        {   tempBook = new Book();
+            booksFile >> *tempBook;
             m_books.push_back(tempBook);
         }
-        catch (...) {}
+        catch (...)
+        {
+            delete tempBook;
+        }
     }
     booksFile.close();
 
@@ -28,13 +31,17 @@ Manager::Manager()
     getline(customersFile, temp);
     while(!customersFile.eof())
     {
+        Customer *tempCustomer;
         try
         {
-            Customer tempCustomer;
-            customersFile >> tempCustomer;
+            tempCustomer = new Customer();
+            customersFile >> *tempCustomer;
             m_customers.push_back(tempCustomer);
         }
-        catch (...) {}
+        catch (...)
+        {
+            delete tempCustomer;
+        }
     }
     customersFile.close();
 
@@ -42,13 +49,31 @@ Manager::Manager()
     getline(ratingsFile, temp);
     while(!ratingsFile.eof())
     {
+        Rating *tempRating;
         try
         {
-            Rating tempRating;
-            ratingsFile >> tempRating;
-            m_ratings.push_back(tempRating);
+            tempRating = new Rating();
+            ratingsFile >> *tempRating;
+            m_ratings[tempRating->getId()].push_back(tempRating);
         }
-        catch (...) {}
+        catch (...)
+        {
+            delete tempRating;
+        }
     }
     ratingsFile.close();
+}
+
+
+Manager::~Manager()
+{
+    for(vector<Book*>::iterator it = m_books.begin(); it != m_books.end(); ++it)
+    {
+        delete *it;
+    }
+
+    for(vector<Customer*>::iterator it = m_customers.begin(); it != m_customers.end(); ++it)
+    {
+        delete *it;
+    }
 }

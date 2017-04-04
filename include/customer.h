@@ -7,11 +7,11 @@
 
 class Customer
 {
-    private: 
+private: 
     int m_id;
     std::string m_name;
 
-    public:
+public:
     Customer();
     Customer(int nId, std::string nName);
     

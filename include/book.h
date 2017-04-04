@@ -7,12 +7,12 @@
 
 class Book
 {
-    private:
+private:
     std::string m_isbn;
     std::string m_description;
     //std::vector<Books> m_BookList;
 
-    public:
+public:
     Book();
     Book(std::string isbn, std::string description);
 
