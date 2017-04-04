@@ -1,15 +1,13 @@
-#include "rating.h"
+#include "manager.h"
 #include <iostream>
 
 using namespace std;
 
+
 int main()
 {
-    Rating rating; 
-    cout << "Enter info" << endl;
-    
-    cin >> rating;
-    
+    Manager manager;
+
     return 0;
     
 }

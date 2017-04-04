@@ -7,7 +7,11 @@ LIBS=
 O=build
 
 OBJS= \
-    $(O)/main.o
+    $(O)/main.o \
+    $(O)/book.o \
+    $(O)/customer.o \
+    $(O)/rating.o \
+    $(O)/manager.o
 
 all: $(O)/project
 

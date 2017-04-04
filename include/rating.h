@@ -3,6 +3,7 @@
 
 #include <iostream>
 
+
 class Rating
 {
     private:
