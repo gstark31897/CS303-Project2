@@ -21,6 +21,8 @@ public:
     Manager();
     ~Manager();
 
+    Customer* getCustomer(int id);
+
     std::vector<Book*> getRecomendations();
     void rateBook(int userId, std::string isbn);
 };

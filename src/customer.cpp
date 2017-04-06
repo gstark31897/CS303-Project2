@@ -1,5 +1,7 @@
 #include "customer.h"
 
+#include <stdlib.h>
+
 using namespace std;
 
 
@@ -19,9 +21,9 @@ Customer::Customer(int id, string name)
 
 Customer::~Customer()
 {
-    for(vector<Rating*>::iterator it = m_ratings.begin(); it != m_ratings.end(); ++it)
+    for(map<string, Rating*>::iterator it = m_ratings.begin(); it != m_ratings.end(); ++it)
     {
-        delete *it;
+        delete it->second;
     }
 }
 
@@ -39,6 +41,29 @@ istream& operator>>(istream& in, Customer& customer)
 
 void Customer::addRating(Rating *rating)
 {
-    m_ratings.push_back(rating);
+    m_ratings[rating->getBookId()] = rating;
+}
+
+
+int Customer::getRating(string bookId)
+{
+    map<string, Rating*>::iterator it = m_ratings.find(bookId);
+    if(it == m_ratings.end())
+        return -1;
+    return it->second->getRating();
+}
+
+
+float Customer::getSimilarity(Customer *customer)
+{
+    float similarity = 0.0f;
+    for(map<string, Rating*>::iterator it = m_ratings.begin(); it != m_ratings.end(); ++it)
+    {
+        int value = customer->getRating(it->first);
+        if(value == -1)
+            continue;
+        similarity += ((float)abs(value - it->second->getRating()));
+    }
+    return similarity;
 }
 

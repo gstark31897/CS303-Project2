@@ -5,7 +5,7 @@
 
 #include <iostream>
 #include <string>
-#include <vector>
+#include <map>
 
 
 class Customer
@@ -13,7 +13,7 @@ class Customer
 private: 
     int m_id;
     std::string m_name;
-    std::vector<Rating*> m_ratings;
+    std::map<std::string, Rating*> m_ratings;
 
 public:
     Customer();
@@ -22,9 +22,13 @@ public:
     ~Customer();
     
     void addRating(Rating *rating);
+    int getRating(std::string isbn);
+    int countRatings() { return m_ratings.size(); };
 
     int getId() {return m_id;}
     std::string getName() {return m_name;}
+
+    float getSimilarity(Customer *customer);
 
     friend std::istream& operator>>(std::istream& in, Customer& customer);
 };
