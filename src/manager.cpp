@@ -36,7 +36,7 @@ Manager::Manager()
         {
             tempCustomer = new Customer();
             customersFile >> *tempCustomer;
-            m_customers.push_back(tempCustomer);
+            m_customers[tempCustomer->getId()] = tempCustomer;
         }
         catch (...)
         {
@@ -54,7 +54,7 @@ Manager::Manager()
         {
             tempRating = new Rating();
             ratingsFile >> *tempRating;
-            m_ratings[tempRating->getId()].push_back(tempRating);
+            m_customers[tempRating->getId()]->addRating(tempRating);
         }
         catch (...)
         {
@@ -72,8 +72,8 @@ Manager::~Manager()
         delete *it;
     }
 
-    for(vector<Customer*>::iterator it = m_customers.begin(); it != m_customers.end(); ++it)
+    for(map<int, Customer*>::iterator it = m_customers.begin(); it != m_customers.end(); ++it)
     {
-        delete *it;
+        delete it->second;
     }
 }

@@ -1,8 +1,11 @@
 #ifndef H_CUSTOMER
 #define H_CUSTOMER
 
+#include "rating.h"
+
 #include <iostream>
 #include <string>
+#include <vector>
 
 
 class Customer
@@ -10,15 +13,17 @@ class Customer
 private: 
     int m_id;
     std::string m_name;
+    std::vector<Rating*> m_ratings;
 
 public:
     Customer();
-    Customer(int nId, std::string nName);
-    
-    void setID(int nId) {m_id = nId;}
-    void setName(std::string name) {m_name = name;}
+    Customer(int id, std::string name);
 
-    int getID() {return m_id;}
+    ~Customer();
+    
+    void addRating(Rating *rating);
+
+    int getId() {return m_id;}
     std::string getName() {return m_name;}
 
     friend std::istream& operator>>(std::istream& in, Customer& customer);
