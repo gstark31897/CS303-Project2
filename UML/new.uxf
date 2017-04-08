@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>50</x>
+      <y>310</y>
+      <w>210</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>Book
+--
+-m_isbn: string
+-m_description: string
+--
+
++operator&gt;&gt;(&amp;istream:in, &amp;Book:book)
+istream
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>290</x>
+      <y>190</y>
+      <w>360</w>
+      <h>320</h>
+    </coordinates>
+    <panel_attributes>Customer
+--
+-m_id:int
+-m_name:string
+--
+
++addRating(*Rating:rating)
+void
+
++getRating(string:isbn)
+int
+
++countRatings()
+int
+
++getSimilarity(*Customer:customer)
+float
+
++operator&gt;&gt;(&amp;istream:in, &amp;Customer:customer)
+istream
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>30</x>
+      <y>20</y>
+      <w>310</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>Rating
+--
+-m_cId:int
+-m_rating:int
+m_bookId:string
+--
+
++operator&gt;&gt;(&amp;istream:in, &amp;Rating:rating)
+istream
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>400</x>
+      <y>20</y>
+      <w>270</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>map&lt;string, *Rating:m_ratings&gt;
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>330</x>
+      <y>20</y>
+      <w>90</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=*
+</panel_attributes>
+    <additional_attributes>70.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>510</x>
+      <y>40</y>
+      <w>30</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=1
+</panel_attributes>
+    <additional_attributes>10.0;150.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>320</x>
+      <y>560</y>
+      <w>350</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>map&lt;int, *Customer:m_customers&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>70</x>
+      <y>560</y>
+      <w>170</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>vector&lt;*Book&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>140</x>
+      <y>430</y>
+      <w>30</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=*</panel_attributes>
+    <additional_attributes>10.0;130.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>530</x>
+      <y>500</y>
+      <w>30</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=*
+</panel_attributes>
+    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>140</x>
+      <y>660</y>
+      <w>280</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>Manager
+--
+
+-getSimilarity(userId1:int, userId2:int)
+Customer*
+
+-getRecomendations()
+vector&lt;*Book&gt;
+
+rateBook(userId:int, isbn:string)
+void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>170</x>
+      <y>580</y>
+      <w>30</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=1</panel_attributes>
+    <additional_attributes>10.0;80.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>340</x>
+      <y>580</y>
+      <w>30</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=1</panel_attributes>
+    <additional_attributes>10.0;80.0;10.0;10.0</additional_attributes>
+  </element>
+</diagram>
