@@ -1,5 +1,6 @@
 #include "customer.h"
 
+#include <fstream>
 #include <stdlib.h>
 #include <algorithm>
 
@@ -40,9 +41,16 @@ istream& operator>>(istream& in, Customer& customer)
 }
 
 
-void Customer::addRating(Rating *rating)
+void Customer::addRating(Rating *rating, bool write)
 {
     m_ratings[rating->getBookId()] = rating;
+
+    if (write)
+    {
+        ofstream file("ratings.txt", fstream::in | fstream::out | fstream::app);
+        file << *rating << flush;
+        file.close();
+    }
 }
 
 
@@ -65,7 +73,8 @@ float Customer::getSimilarity(Customer *customer)
             continue;
         similarity += ((float)abs(value - it->second->getRating()));
     }
-    return similarity;
+    // add 1 so the most popular books overall will get suggested when there are no similar customers
+    return similarity + 1;
 }
 
 

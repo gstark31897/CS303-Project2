@@ -22,7 +22,7 @@ public:
 
     ~Customer();
     
-    void addRating(Rating *rating);
+    void addRating(Rating *rating, bool write = false);
     int getRating(int isbn);
     int countRatings() { return m_ratings.size(); };
 

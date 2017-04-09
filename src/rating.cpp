@@ -17,7 +17,7 @@ Rating::Rating(int id, int rating, int book)
     m_bookId = book;
 }
 
-istream& operator>>(istream& in, Rating& rating)
+istream& operator>>(istream &in, Rating& rating)
 {
     string temp = ""; 
     getline(in, temp);
@@ -32,4 +32,11 @@ istream& operator>>(istream& in, Rating& rating)
     rating.m_rating = stoi(temp.substr(0, position)); 
     rating.m_bookId = stoi(temp.substr(position + 2, temp.length()));
     return in;
+}
+
+
+ostream& operator<<(ostream &out, const Rating &rating)
+{
+    out << rating.m_cId << ", " << rating.m_rating << ", " << rating.m_bookId << endl;
+    return out;
 }

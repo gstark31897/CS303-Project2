@@ -26,6 +26,7 @@ class Rating
     bool operator<(Rating &rhs) { return getRating() < rhs.getRating(); };
     
     friend std::istream& operator>>(std::istream& in, Rating& rating);
+    friend std::ostream& operator<<(std::ostream& out, const Rating& rating);
 };
 
 #endif

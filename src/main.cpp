@@ -4,6 +4,13 @@
 using namespace std;
 
 
+void clearCin()
+{
+    cin.clear();
+    cin.ignore(10000, '\n');
+}
+
+
 int main()
 {
     Manager manager;
@@ -20,9 +27,7 @@ int main()
 
         int choice = -1;
         cin >> choice;
-
-        cin.clear();
-        cin.ignore(10000, '\n');
+        clearCin();
 
         switch(choice)
         {
@@ -31,6 +36,7 @@ int main()
                 int id = -1;
                 cout << "User ID: " << flush;
                 cin >> id;
+                clearCin();
                 customer = manager.getCustomer(id);
                 if(customer == NULL)
                     cout << "ERROR: Invalid User ID" << endl;
@@ -39,6 +45,36 @@ int main()
             }
             break;
         case 2:
+            {
+                Book *book = NULL;
+                int isbn = -1;
+                while(true)
+                {
+                    cout << "Book ISBN: " << flush;
+                    cin >> isbn;
+                    clearCin();
+
+                    book = manager.getBook(isbn);
+                    if(book != NULL)
+                        break;
+                    cout << "Invalid ISBN" << endl;
+                }
+
+                int rating = -1;
+                while(true)
+                {
+                    cout << "Book Rating (1-5): " << flush;
+                    cin >> rating;
+                    clearCin();
+
+                    if(rating <= 5 && rating > 0)
+                        break;
+                    cout << "Invalid Rating" << endl;
+                    
+                }
+
+                manager.rateBook(customer, isbn, rating); 
+            }
             break;
         case 3:
             {
