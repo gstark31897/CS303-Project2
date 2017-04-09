@@ -12,7 +12,7 @@
 class Manager
 {
 private:
-    std::vector<Book*> m_books;
+    std::map<int, Book*> m_books;
     std::map<int, Customer*> m_customers;
 
     double getSimilarity(int userId1, int userId2);
@@ -23,8 +23,10 @@ public:
 
     Customer* getCustomer(int id);
 
-    std::vector<Book*> getRecomendations(int id);
-    void rateBook(int userId, std::string isbn);
+    std::vector<Book*> getRecomendations(Customer *customer);
+    void rateBook(int userId, int isbn);
+
+    Book *getBook(int isbn);
 };
 
 #endif

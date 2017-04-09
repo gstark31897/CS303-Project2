@@ -43,7 +43,7 @@ int main()
         case 3:
             {
                 vector<Book*> suggestions;
-                suggestions = manager.getRecomendations(customer->getId());
+                suggestions = manager.getRecomendations(customer);
                 cout << "Recomendations:" << endl;
                 for(vector<Book*>::iterator it = suggestions.begin(); it != suggestions.end(); ++it)
                 {

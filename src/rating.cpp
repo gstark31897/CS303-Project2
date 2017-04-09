@@ -7,10 +7,10 @@ Rating::Rating()
 {
     m_cId = 0;
     m_rating = 0;
-    m_bookId = "";
+    m_bookId = 0;
 }
 
-Rating::Rating(int id, int rating, string book)
+Rating::Rating(int id, int rating, int book)
 {
     m_cId = id;
     m_rating = rating;
@@ -30,6 +30,6 @@ istream& operator>>(istream& in, Rating& rating)
     //find spot of second comma
     position = temp.find(',');
     rating.m_rating = stoi(temp.substr(0, position)); 
-    rating.m_bookId = temp.substr(position + 2, temp.length());
+    rating.m_bookId = stoi(temp.substr(position + 2, temp.length()));
     return in;
 }

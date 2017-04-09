@@ -1,6 +1,7 @@
 #include "customer.h"
 
 #include <stdlib.h>
+#include <algorithm>
 
 using namespace std;
 
@@ -21,7 +22,7 @@ Customer::Customer(int id, string name)
 
 Customer::~Customer()
 {
-    for(map<string, Rating*>::iterator it = m_ratings.begin(); it != m_ratings.end(); ++it)
+    for(map<int, Rating*>::iterator it = m_ratings.begin(); it != m_ratings.end(); ++it)
     {
         delete it->second;
     }
@@ -45,9 +46,9 @@ void Customer::addRating(Rating *rating)
 }
 
 
-int Customer::getRating(string bookId)
+int Customer::getRating(int bookId)
 {
-    map<string, Rating*>::iterator it = m_ratings.find(bookId);
+    map<int, Rating*>::iterator it = m_ratings.find(bookId);
     if(it == m_ratings.end())
         return -1;
     return it->second->getRating();
@@ -57,7 +58,7 @@ int Customer::getRating(string bookId)
 float Customer::getSimilarity(Customer *customer)
 {
     float similarity = 0.0f;
-    for(map<string, Rating*>::iterator it = m_ratings.begin(); it != m_ratings.end(); ++it)
+    for(map<int, Rating*>::iterator it = m_ratings.begin(); it != m_ratings.end(); ++it)
     {
         int value = customer->getRating(it->first);
         if(value == -1)
@@ -67,3 +68,45 @@ float Customer::getSimilarity(Customer *customer)
     return similarity;
 }
 
+
+bool sortByRating(Rating* lhs, Rating* rhs)
+{
+    return lhs->getRating() < rhs->getRating();
+}
+
+
+vector<Rating*> Customer::getRatings()
+{
+    vector<Rating*> temp;
+    for(map<int, Rating*>::iterator it = m_ratings.begin(); it != m_ratings.end(); ++it)
+    {
+        temp.push_back(it->second);
+    }
+    sort(temp.begin(), temp.end(), sortByRating);
+    return temp;
+}
+
+
+vector<Rating*> Customer::getRecomendations(vector<Rating*> ratings)
+{
+    vector<Rating*> temp;
+    for(map<int, Rating*>::iterator it = m_ratings.begin(); it != m_ratings.end(); ++it)
+    {
+        bool alreadyRated = false;
+        for(vector<Rating*>::iterator it2 = ratings.begin(); it2 != ratings.end(); ++it2)
+        {
+            if(it->second->getBookId() == (*it2)->getBookId())
+            {
+                alreadyRated = true;
+                break;
+            }
+        }
+
+        if(!alreadyRated)
+        {
+            temp.push_back(it->second);
+        }
+    }
+    sort(temp.begin(), temp.end(), sortByRating);
+    return temp;
+}

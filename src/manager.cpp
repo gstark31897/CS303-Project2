@@ -2,6 +2,7 @@
 
 #include <fstream>
 #include <iostream>
+#include <algorithm>
 
 using namespace std;
 
@@ -18,7 +19,7 @@ Manager::Manager()
         try
         {   tempBook = new Book();
             booksFile >> *tempBook;
-            m_books.push_back(tempBook);
+            m_books[tempBook->getIsbn()] = tempBook;
         }
         catch (...)
         {
@@ -67,9 +68,9 @@ Manager::Manager()
 
 Manager::~Manager()
 {
-    for(vector<Book*>::iterator it = m_books.begin(); it != m_books.end(); ++it)
+    for(map<int, Book*>::iterator it = m_books.begin(); it != m_books.end(); ++it)
     {
-        delete *it;
+        delete it->second;
     }
 
     for(map<int, Customer*>::iterator it = m_customers.begin(); it != m_customers.end(); ++it)
@@ -88,7 +89,57 @@ Customer* Manager::getCustomer(int id)
 }
 
 
-vector<Book*> Manager::getRecomendations(int id)
+bool compairWeightedValue(pair<int, double> lhs, pair<int, double> rhs)
 {
+    return lhs.second < rhs.second;
+}
 
+
+vector<Book*> Manager::getRecomendations(Customer *customer)
+{
+    vector<Book*> output;
+    map<int, double> weights;
+    map<int, vector<Rating*>> ratings;
+    map<int, double> weightedRatings;
+    vector<Rating*> customerRatings = customer->getRatings();
+    for(map<int, Customer*>::iterator it = m_customers.begin(); it != m_customers.end(); ++it)
+    {
+        if(it->second == customer)
+            continue;
+        weights[it->first] = it->second->getSimilarity(customer);
+        ratings[it->first] = it->second->getRecomendations(customerRatings);
+    }
+
+    for(map<int, double>::iterator it = weights.begin(); it != weights.end(); ++it)
+    {
+        for(vector<Rating*>::iterator it2 = ratings[it->first].begin(); it2 != ratings[it->first].end(); ++it2)
+        {
+            if(weightedRatings.find((*it2)->getBookId()) == weightedRatings.end())
+                weightedRatings[(*it2)->getBookId()] = 0.0;
+            weightedRatings[(*it2)->getBookId()] += it->second * (*it2)->getRating();
+        }
+    }
+
+    vector<pair<int, double>> bookRatings;
+    for(map<int, double>::iterator it = weightedRatings.begin(); it != weightedRatings.end(); ++it)
+    {
+        bookRatings.push_back(*it);
+    }
+    sort(bookRatings.begin(), bookRatings.end(), compairWeightedValue);
+
+    for(vector<pair<int, double>>::iterator it = bookRatings.begin(); it != bookRatings.end(); ++it)
+    {
+        output.push_back(getBook(it->first));
+    }
+
+    return output;
+}
+
+
+Book* Manager::getBook(int isbn)
+{
+    map<int, Book*>::iterator it = m_books.find(isbn);
+    if(it != m_books.end())
+        return it->second;
+    return NULL;
 }
