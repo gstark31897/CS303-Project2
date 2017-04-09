@@ -77,3 +77,13 @@ Manager::~Manager()
         delete it->second;
     }
 }
+
+
+Customer* Manager::getCustomer(int id)
+{
+    map<int, Customer*>::iterator it = m_customers.find(id);
+    if(it == m_customers.end())
+        return NULL;
+    return it->second;
+}
+
