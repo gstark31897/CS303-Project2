@@ -87,3 +87,8 @@ Customer* Manager::getCustomer(int id)
     return it->second;
 }
 
+
+vector<Book*> Manager::getRecomendations(int id)
+{
+
+}

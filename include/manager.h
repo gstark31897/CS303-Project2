@@ -23,7 +23,7 @@ public:
 
     Customer* getCustomer(int id);
 
-    std::vector<Book*> getRecomendations();
+    std::vector<Book*> getRecomendations(int id);
     void rateBook(int userId, std::string isbn);
 };
 

@@ -41,6 +41,15 @@ int main()
         case 2:
             break;
         case 3:
+            {
+                vector<Book*> suggestions;
+                suggestions = manager.getRecomendations(customer->getId());
+                cout << "Recomendations:" << endl;
+                for(vector<Book*>::iterator it = suggestions.begin(); it != suggestions.end(); ++it)
+                {
+                    cout << (*it)->getDescription() << endl; 
+                }
+            }
             break;
         case 4:
             return 0;
