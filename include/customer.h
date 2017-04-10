@@ -14,7 +14,7 @@ class Customer
 private: 
     int m_id;
     std::string m_name;
-    std::map<int, Rating*> m_ratings;
+    std::map<long, Rating*> m_ratings;
 
 public:
     Customer();
@@ -23,7 +23,7 @@ public:
     ~Customer();
     
     void addRating(Rating *rating, bool write = false);
-    int getRating(int isbn);
+    int getRating(long isbn);
     int countRatings() { return m_ratings.size(); };
 
     int getId() {return m_id;}

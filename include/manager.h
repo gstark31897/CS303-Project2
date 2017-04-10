@@ -1,5 +1,5 @@
-#ifndef H_USERMANAGER
-#define H_USERMANAGER
+#ifndef H_MANAGER
+#define H_MANAGER
 
 #include "book.h"
 #include "customer.h"
@@ -27,6 +27,8 @@ public:
     void rateBook(Customer *customer, long isbn, int rating);
 
     Book *getBook(long isbn);
+    std::vector<Book*> getBooksByIsbn(std::string query);
+    std::vector<Book*> getBooksByDescription(std::string query);
 };
 
 #endif

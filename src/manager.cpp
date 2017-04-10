@@ -150,3 +150,26 @@ void Manager::rateBook(Customer *customer, long isbn, int rating)
     customer->addRating(new Rating(customer->getId(), rating, isbn), true);
 }
 
+
+vector<Book*> Manager::getBooksByIsbn(string query)
+{
+    vector<Book*> output;
+    for(map<long, Book*>::iterator it = m_books.begin(); it != m_books.end(); ++it)
+    {
+        if(to_string(it->first).find(query) != string::npos)
+            output.push_back(getBook(it->first));
+    }
+    return output;
+}
+
+
+vector<Book*> Manager::getBooksByDescription(string query)
+{
+    vector<Book*> output;
+    for(map<long, Book*>::iterator it = m_books.begin(); it != m_books.end(); ++it)
+    {
+        if(string(it->second->getDescription()).find(query) != string::npos)
+            output.push_back(getBook(it->first));
+    }
+    return output;
+}

@@ -23,7 +23,7 @@ Customer::Customer(int id, string name)
 
 Customer::~Customer()
 {
-    for(map<int, Rating*>::iterator it = m_ratings.begin(); it != m_ratings.end(); ++it)
+    for(map<long, Rating*>::iterator it = m_ratings.begin(); it != m_ratings.end(); ++it)
     {
         delete it->second;
     }
@@ -54,9 +54,9 @@ void Customer::addRating(Rating *rating, bool write)
 }
 
 
-int Customer::getRating(int bookId)
+int Customer::getRating(long bookId)
 {
-    map<int, Rating*>::iterator it = m_ratings.find(bookId);
+    map<long, Rating*>::iterator it = m_ratings.find(bookId);
     if(it == m_ratings.end())
         return -1;
     return it->second->getRating();
@@ -66,7 +66,7 @@ int Customer::getRating(int bookId)
 float Customer::getSimilarity(Customer *customer)
 {
     float similarity = 0.0f;
-    for(map<int, Rating*>::iterator it = m_ratings.begin(); it != m_ratings.end(); ++it)
+    for(map<long, Rating*>::iterator it = m_ratings.begin(); it != m_ratings.end(); ++it)
     {
         int value = customer->getRating(it->first);
         if(value == -1)
@@ -87,7 +87,7 @@ bool sortByRating(Rating* lhs, Rating* rhs)
 vector<Rating*> Customer::getRatings()
 {
     vector<Rating*> temp;
-    for(map<int, Rating*>::iterator it = m_ratings.begin(); it != m_ratings.end(); ++it)
+    for(map<long, Rating*>::iterator it = m_ratings.begin(); it != m_ratings.end(); ++it)
     {
         temp.push_back(it->second);
     }
@@ -99,7 +99,7 @@ vector<Rating*> Customer::getRatings()
 vector<Rating*> Customer::getRecomendations(vector<Rating*> ratings)
 {
     vector<Rating*> temp;
-    for(map<int, Rating*>::iterator it = m_ratings.begin(); it != m_ratings.end(); ++it)
+    for(map<long, Rating*>::iterator it = m_ratings.begin(); it != m_ratings.end(); ++it)
     {
         bool alreadyRated = false;
         for(vector<Rating*>::iterator it2 = ratings.begin(); it2 != ratings.end(); ++it2)
