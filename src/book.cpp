@@ -17,6 +17,7 @@ Book::Book(long isbn, string description)
 
 istream& operator>>(istream& in, Book& book)
 {
+    // read a line from the csv file and grab the required values
     string temp = "";
     getline(in, temp);
     int position = temp.find(',');

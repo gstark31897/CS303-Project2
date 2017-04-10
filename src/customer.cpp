@@ -23,6 +23,7 @@ Customer::Customer(int id, string name)
 
 Customer::~Customer()
 {
+    // clean up the rating objects
     for(map<long, Rating*>::iterator it = m_ratings.begin(); it != m_ratings.end(); ++it)
     {
         delete it->second;
@@ -32,6 +33,7 @@ Customer::~Customer()
 
 istream& operator>>(istream& in, Customer& customer)
 {
+    // read a line from the csv file and grab the respective values
     string temp = "";
     getline(in, temp);
     int position = temp.find(',');
@@ -43,8 +45,9 @@ istream& operator>>(istream& in, Customer& customer)
 
 void Customer::addRating(Rating *rating, bool write)
 {
+    // add the rating to out internal map
     m_ratings[rating->getBookId()] = rating;
-
+    // write it to file if need be
     if (write)
     {
         ofstream file("ratings.txt", fstream::in | fstream::out | fstream::app);
@@ -80,27 +83,30 @@ float Customer::getSimilarity(Customer *customer)
 
 bool sortByRating(Rating* lhs, Rating* rhs)
 {
+    // util method for sorting rating objects
     return lhs->getRating() < rhs->getRating();
 }
 
 
 vector<Rating*> Customer::getRatings()
 {
+    // return a list of ratings
     vector<Rating*> temp;
     for(map<long, Rating*>::iterator it = m_ratings.begin(); it != m_ratings.end(); ++it)
     {
         temp.push_back(it->second);
     }
-    sort(temp.begin(), temp.end(), sortByRating);
     return temp;
 }
 
 
 vector<Rating*> Customer::getRecomendations(vector<Rating*> ratings)
 {
+    // return a sorted list of ratings that are not in the provided vector
     vector<Rating*> temp;
     for(map<long, Rating*>::iterator it = m_ratings.begin(); it != m_ratings.end(); ++it)
     {
+        // check if the book has been rated yet
         bool alreadyRated = false;
         for(vector<Rating*>::iterator it2 = ratings.begin(); it2 != ratings.end(); ++it2)
         {
@@ -110,12 +116,11 @@ vector<Rating*> Customer::getRecomendations(vector<Rating*> ratings)
                 break;
             }
         }
-
+        // return the book if it has not
         if(!alreadyRated)
         {
             temp.push_back(it->second);
         }
     }
-    sort(temp.begin(), temp.end(), sortByRating);
     return temp;
 }
