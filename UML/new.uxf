@@ -4,14 +4,14 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>50</x>
-      <y>310</y>
-      <w>210</w>
+      <x>30</x>
+      <y>290</y>
+      <w>280</w>
       <h>130</h>
     </coordinates>
     <panel_attributes>Book
 --
--m_isbn: string
+-m_isbn: long
 -m_description: string
 --
 
@@ -23,10 +23,10 @@ istream
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>290</x>
-      <y>190</y>
+      <x>330</x>
+      <y>60</y>
       <w>360</w>
-      <h>320</h>
+      <h>420</h>
     </coordinates>
     <panel_attributes>Customer
 --
@@ -46,6 +46,12 @@ int
 +getSimilarity(*Customer:customer)
 float
 
++getRatings()
+vector&lt;*Rating&gt;
+
++getRecomendation(vector&lt;*Rating&gt;:ratings)
++vector&lt;*Rating&gt;
+
 +operator&gt;&gt;(&amp;istream:in, &amp;Customer:customer)
 istream
 </panel_attributes>
@@ -54,10 +60,10 @@ istream
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>30</x>
-      <y>20</y>
+      <x>10</x>
+      <y>0</y>
       <w>310</w>
-      <h>150</h>
+      <h>240</h>
     </coordinates>
     <panel_attributes>Rating
 --
@@ -66,16 +72,21 @@ istream
 m_bookId:string
 --
 
++operator&lt;(&amp;Rating:rhs)
+bool
+
 +operator&gt;&gt;(&amp;istream:in, &amp;Rating:rating)
 istream
-</panel_attributes>
+
++operator&lt;&lt;(&amp;ostream:out, const &amp;Rating:)
+ostream</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>400</x>
-      <y>20</y>
+      <x>380</x>
+      <y>0</y>
       <w>270</w>
       <h>30</h>
     </coordinates>
@@ -86,8 +97,8 @@ istream
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>330</x>
-      <y>20</y>
+      <x>310</x>
+      <y>0</y>
       <w>90</w>
       <h>50</h>
     </coordinates>
@@ -99,21 +110,21 @@ m1=*
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>510</x>
-      <y>40</y>
+      <x>490</x>
+      <y>20</y>
       <w>30</w>
-      <h>170</h>
+      <h>60</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 m1=1
 </panel_attributes>
-    <additional_attributes>10.0;150.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;40.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>320</x>
-      <y>560</y>
+      <x>300</x>
+      <y>520</y>
       <w>350</w>
       <h>30</h>
     </coordinates>
@@ -123,8 +134,8 @@ m1=1
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>70</x>
-      <y>560</y>
+      <x>50</x>
+      <y>480</y>
       <w>170</w>
       <h>30</h>
     </coordinates>
@@ -134,35 +145,35 @@ m1=1
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>140</x>
-      <y>430</y>
+      <x>120</x>
+      <y>410</y>
       <w>30</w>
-      <h>150</h>
+      <h>90</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 m1=*</panel_attributes>
-    <additional_attributes>10.0;130.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;70.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>530</x>
-      <y>500</y>
+      <x>510</x>
+      <y>470</y>
       <w>30</w>
-      <h>80</h>
+      <h>70</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 m1=*
 </panel_attributes>
-    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;50.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>140</x>
-      <y>660</y>
+      <x>120</x>
+      <y>580</y>
       <w>280</w>
-      <h>190</h>
+      <h>380</h>
     </coordinates>
     <panel_attributes>Manager
 --
@@ -170,18 +181,30 @@ m1=*
 -getSimilarity(userId1:int, userId2:int)
 Customer*
 
--getRecomendations()
++getCustomer(int:id)
+Customer*
+
++getRecomendations(*Customer:customer)
 vector&lt;*Book&gt;
 
-rateBook(userId:int, isbn:string)
-void</panel_attributes>
++rateBook(userId:int, isbn:string)
+void
+
++getBook(long:isbn)
+*Book
+
++getBooksByIsbn(string:query)
+vector&lt;*Book&gt;
+
++getBooksByDescription(string:query)
+vector&lt;*Book&gt;</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>170</x>
-      <y>580</y>
+      <x>150</x>
+      <y>500</y>
       <w>30</w>
       <h>100</h>
     </coordinates>
@@ -192,13 +215,13 @@ m1=1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>340</x>
-      <y>580</y>
+      <x>320</x>
+      <y>540</y>
       <w>30</w>
-      <h>100</h>
+      <h>60</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 m1=1</panel_attributes>
-    <additional_attributes>10.0;80.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;40.0;10.0;10.0</additional_attributes>
   </element>
 </diagram>
