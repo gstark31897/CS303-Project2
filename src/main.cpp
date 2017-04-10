@@ -6,8 +6,101 @@ using namespace std;
 
 void clearCin()
 {
+    // util function for clearing inpu
     cin.clear();
     cin.ignore(10000, '\n');
+}
+
+
+void searchMenu(Manager &manager, Customer *customer)
+{
+    // menu for searching for books
+    while(true)
+    {
+query:
+        // Print out the menu
+        cout << "*****Book Search*****" << endl;
+        cout << "By ISBN (1)" << endl;
+        cout << "By Description (2)" << endl;
+        cout << "Main Menu (3)" << endl;
+        cout << "Select One (1-3): " << flush;
+
+        // get selection
+        int choice = -1;
+        cin >> choice;
+        clearCin();
+
+        if(choice == 3)
+            return;
+
+        cout << "Enter Query: " << flush;
+        string line;
+        getline(cin, line);
+
+        vector<Book*> books;
+        switch(choice)
+        {
+        case 1:
+            books = manager.getBooksByIsbn(line);
+            break;
+        case 2:
+            books = manager.getBooksByDescription(line);
+            break;
+        default:
+            cout << "Invalid Choice" << endl;
+            continue;
+        }
+
+        // let the user do stuff with the results
+        while(true)
+        {
+            // print out the search results
+            cout << "*****Result*****" << endl;
+            for(long i = 0; i < (long)books.size(); ++i)
+            {
+               cout << books[i]->getIsbn() << ':' << books[i]->getDescription() << " (" << i + 1 << ')' << endl;
+            }
+            cout << "New Query (0)" << endl;
+            cout << "Select One (0-" << books.size() << "): " << flush;
+
+            long selection = -1;
+            cin >> selection;
+            clearCin();
+
+            switch(selection)
+            {
+            case 0:
+                // go back to the main section of this menu
+                goto query;
+            default:
+                // make sure the book is in range
+                if(selection < 0 || selection > (long)books.size())
+                {
+                    cout << "Invalid Selection" << endl;
+                    continue;
+                }
+                int rating = customer->getRating(books[selection-1]->getIsbn());
+                if(rating != -1)
+                {
+                    // tell the user what they rated the book
+                    cout << "You rated this book with a " << rating << endl;
+                }
+                else
+                {
+                    // let the user rate it if they haven't yet
+                    cout << "What would you rate this book? (1-5)" << endl;
+                    cin >> rating;
+                    if(rating > 5 || rating < 1)
+                    {
+                        cout << "Invalid Rating" << endl;
+                        continue;
+                    }
+                    manager.rateBook(customer, books[selection - 1]->getIsbn(), rating);
+                }
+                break;
+            }
+        }
+    }
 }
 
 
@@ -18,6 +111,7 @@ int main()
 
     while(true)
     {
+        // print out the main menu
         cout << "*****Main Menu*****" << endl;
         cout << "Log in (1)" << endl;
         cout << "Search Books (2)" << endl;
@@ -33,6 +127,7 @@ int main()
         {
         case 1:
             {
+                // get the customer object for the specified user
                 int id = -1;
                 cout << "User ID: " << flush;
                 cin >> id;
@@ -46,87 +141,23 @@ int main()
             break;
         case 2:
             {
-                while(true)
+                // check the customer object then open the search menu
+                if(customer == NULL)
                 {
-                    cout << "*****Book Search*****" << endl;
-                    cout << "By ISBN (1)" << endl;
-                    cout << "By Description (2)" << endl;
-                    cout << "Main Menu (3)" << endl;
-                    cout << "Select One (1-3): " << flush;
-
-                    cin >> choice;
-                    clearCin();
-
-                    cout << "Enter Query: " << flush;
-                    string line;
-                    getline(cin, line);
-
-                    vector<Book*> books;
-                    bool gotoMain = false;
-                    switch(choice)
-                    {
-                    case 1:
-                        books = manager.getBooksByIsbn(line);
-                        break;
-                    case 2:
-                        books = manager.getBooksByDescription(line);
-                        break;
-                    case 3:
-                        gotoMain = true;
-                        break;
-                    default:
-                        cout << "Invalid Choice" << endl;
-                        continue;
-                    }
-
-                    if(gotoMain)
-                        break;
-
-                    while(true)
-                    {
-                        cout << "*****Result*****" << endl;
-                        for(long i = 0; i < books.size(); ++i)
-                        {
-                           cout << books[i]->getIsbn() << ':' << books[i]->getDescription() << " (" << i + 1 << ')' << endl;
-                        }
-                        cout << "New Query (0)" << endl;
-                        cout << "Select One (0-" << books.size() << "): " << flush;
-
-                        long selection = -1;
-                        cin >> selection;
-                        clearCin();
-
-                        bool exitResult = false;
-                        switch(selection)
-                        {
-                        case 0:
-                            exitResult = true;
-                            break;
-                        default:
-                            int rating = customer->getRating(books[selection-1]->getIsbn());
-                            cout << rating << endl;
-                            if(rating != -1)
-                            {
-                                cout << "You rated this book with a " << rating << endl;
-                            }
-                            else
-                            {
-                                cout << "What would you rate this book? (1-5)" << endl;
-                                cin >> rating;
-                                manager.rateBook(customer, books[selection - 1]->getIsbn(), rating);
-                            }
-                            break;
-                        }
-
-                        if(exitResult)
-                            break;
-                    }
+                    cout << "You must log in first" << endl;
+                    break;
                 }
-               // manager.rateBook(customer, isbn, rating); 
+                searchMenu(manager, customer);
             }
             break;
         case 3:
             {
+                // check the customer object then show the recomendations
+                if(customer == NULL)
+                {
+                    cout << "You must log in first" << endl;
+                    break;
+                }
                 vector<Book*> suggestions;
                 suggestions = manager.getRecomendations(customer);
                 cout << "Recomendations:" << endl;

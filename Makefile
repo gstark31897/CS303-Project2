@@ -2,7 +2,7 @@ CXX=  g++
 
 CFLAGS=-g -Wall -Iinclude/ -std=c++11
 LDFLAGS=
-LIBS=
+LIBS=-lpthread
 
 O=build
 
